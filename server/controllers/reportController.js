@@ -27,12 +27,11 @@ router.get("/reports", async (_request, response) => {
 });
 
 router.put("/reports/:reportId", async (request, response) => {
-  const { id } = request.params;
+  const { reportId } = request.params;
   const { ticketState } = request.body;
-  console.log(ticketState);
   try {
     const updated = await Report.updateMany(
-      { "payload.reportId": id },
+      { "payload.reportId": reportId },
       {
         $set: {
           state: ticketState,
@@ -40,9 +39,8 @@ router.put("/reports/:reportId", async (request, response) => {
       }
     ).exec();
     const reports = await Report.find({
-      "payload.reportId": id,
+      "payload.reportId": reportId,
     });
-    console.log(updated)
     if (updated.ok) {
       response.status(200).send(reports.map(transformData));
     }

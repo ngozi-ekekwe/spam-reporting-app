@@ -1,76 +1,72 @@
-import React, { useState } from "react";
-import { Button, Table, Label, Dimmer, Loader } from "semantic-ui-react";
-import mock from "../mock/data";
+import React from "react";
+import { Button, Table, Label } from "semantic-ui-react";
 
-const TableView = ({ data }) => {
-  let tableHeader = ["Report ID", "Type", "State", "Message", "Actions"];
+const TableView = ({ reports, updateReport }) => {
+  const tableHeader = ["Report ID", "Type", "State", "Message", "Actions"];
 
-  const [loading, setLoading] = useState(false);
-
-  const updateReportStatus = (buttonId, reportId) => {};
+  const formatReportType = (type) => {
+    let reportTypeDictionary = {
+      VIOLATES_POLICIES: "Violates Policies",
+      SPAM: "Spam",
+      INFRINGES_PROPERTY: "Infringes Property",
+    };
+    return reportTypeDictionary[type];
+  };
 
   return (
-    <>
-      <Dimmer active={loading}>
-        <Loader />
-      </Dimmer>
-      {
-        <Table celled>
-          <Table.Header>
-            <Table.Row>
-              {tableHeader &&
-                tableHeader.map((header, key) => {
-                  return (
-                    <Table.HeaderCell key={key}>{header}</Table.HeaderCell>
-                  );
-                })}
-            </Table.Row>
-          </Table.Header>
+    <Table celled>
+      <Table.Header>
+        <Table.Row>
+          {tableHeader &&
+            tableHeader.map((header, key) => {
+              return <Table.HeaderCell key={key}>{header}</Table.HeaderCell>;
+            })}
+        </Table.Row>
+      </Table.Header>
 
-          <Table.Body>
-            {mock.elements.map((element, i) => {
-              return (
-                <Table.Row key={i}>
-                  <Table.Cell>{element.payload.reportId}</Table.Cell>
-                  <Table.Cell>{element.payload.reportType}</Table.Cell>
-                  <Table.Cell warning>
-                    <Label className={element.state === "Blocked" && "red"}>
-                      {element.state}
-                    </Label>
-                  </Table.Cell>
-                  <Table.Cell>{element.payload.message}</Table.Cell>
-                  <Table.Cell>
+      <Table.Body>
+        {reports &&
+          reports.map((element, i) => {
+            console.log(element)
+            return (
+              <Table.Row key={i}>
+                <Table.Cell>{element.payload.reportId}</Table.Cell>
+                <Table.Cell>
+                  {formatReportType(element.payload.reportType)}
+                </Table.Cell>
+                <Table.Cell warning>
+                  <Label color={element.state === "Blocked" ? "red" : "grey"}>
+                    {element.state}
+                  </Label>
+                </Table.Cell>
+                <Table.Cell>{element.payload.message}</Table.Cell>
+                <Table.Cell>
+                  <Button
+                    className="green"
+                    success="true"
+                    onClick={() =>
+                      updateReport("closed", element.payload.reportId)
+                    }
+                  >
+                    Resolve
+                  </Button>
+
+                  {
                     <Button
-                      className="green"
-                      success
+                      className="red"
                       onClick={() =>
-                        updateReportStatus("Resolved", element.payload.reportId)
+                        updateReport("Blocked", element.payload.reportId)
                       }
                     >
-                      Resolve
+                      Blocked
                     </Button>
-
-                    {
-                      <Button
-                        className="red"
-                        onClick={() =>
-                          updateReportStatus(
-                            "Blocked",
-                            element.payload.reportId
-                          )
-                        }
-                      >
-                        Blocked
-                      </Button>
-                    }
-                  </Table.Cell>
-                </Table.Row>
-              );
-            })}
-          </Table.Body>
-        </Table>
-      }
-    </>
+                  }
+                </Table.Cell>
+              </Table.Row>
+            );
+          })}
+      </Table.Body>
+    </Table>
   );
 };
 

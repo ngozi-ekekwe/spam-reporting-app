@@ -1,12 +1,12 @@
 import React from "react";
 import { Card, Button } from "semantic-ui-react";
 
-
 function SourceCard({
   source,
   referenceResourceType,
   reportType,
-  state
+  updateReport,
+  reportId
 }) {
   return (
     <div>
@@ -19,14 +19,22 @@ function SourceCard({
           </Card.Meta>
         </Card.Content>
         <Card.Content extra>
-        <div className='ui two buttons'>
-          <Button basic color='green'>
-            Resolve
-          </Button>
-          <Button basic color='red'>
-            Blocked
-          </Button>
-        </div>
+          <div className="ui two buttons">
+            <Button
+              basic
+              color="green"
+              onClick={() => updateReport("closed", reportId)}
+            >
+              Resolve
+            </Button>
+            <Button
+              basic
+              color="red"
+              onClick={() => updateReport("Blocked", reportId)}
+            >
+              Blocked
+            </Button>
+          </div>
         </Card.Content>
       </Card>
     </div>

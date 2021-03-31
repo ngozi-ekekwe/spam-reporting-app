@@ -1,22 +1,31 @@
 import React from "react";
 import { Grid } from "semantic-ui-react";
 import SourceCard from "./Card";
-import mock from "../mock/data";
 
-function GridView() {
+const formatReportType = (type) => {
+  let reportTypeDictionary = {
+    'VIOLATES_POLICIES': 'Violates Policies',
+    'SPAM' : 'Spam',
+    'INFRINGES_PROPERTY': 'Infringes Property'
+  }
+  return reportTypeDictionary[type];
+}
+
+function GridView({ reports, updateReport }) {
   return (
     <div className="home">
-      
       <Grid columns={3}>
-          {mock.elements.map((a, key) => {
-            console.log(a, 'this is a')
+        {reports &&
+          reports.map((report, key) => {
             return (
-              <Grid.Column key={key} mobile={8} tablet={8} computer={4}>
+              <Grid.Column key={key} mobile={16} tablet={8} computer={4}>
                 <SourceCard
-                  source={a.source}
-                  referenceResourceType={a.payload.referenceResourceType}
-                  reportType={a.payload.reportType}
-                  state={a.payload.state}
+                  source={report.source}
+                  referenceResourceType={report.payload.referenceResourceType}
+                  reportType={formatReportType(report.payload.reportType)}
+                  state={report.payload.state}
+                  reportId={report.payload.reportId}
+                  updateReport={updateReport}
                 />
               </Grid.Column>
             );
@@ -25,6 +34,5 @@ function GridView() {
     </div>
   );
 }
-
 
 export default GridView;
