@@ -1,0 +1,42 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-async-errors": "^3.1.1",
+    "helmet": "^4.4.1",
+    "mongoose": "^5.12.2",
+    "morgan": "^1.10.0",
+    "uuid": "^8.3.2"
+  },
+  "name": "spam-reporting-app",
+  "description": "A simple reporting system for admins to resolve and block spam;",
+  "version": "1.0.0",
+  "main": "index.js",
+  "directories": {
+    "test": "tests"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.13.14",
+    "@babel/node": "^7.13.13",
+    "@babel/preset-env": "^7.13.12",
+    "nodemon": "^2.0.7",
+    "prettier": "^2.2.1"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start-dev": "nodemon",
+    "seed": "babel-node server/seed/index.js run-seed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ngozi-ekekwe/spam-reporting-app.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ngozi-ekekwe/spam-reporting-app/issues"
+  },
+  "homepage": "https://github.com/ngozi-ekekwe/spam-reporting-app#readme"
+}

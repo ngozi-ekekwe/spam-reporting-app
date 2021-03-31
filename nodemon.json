@@ -1,0 +1,5 @@
+{
+  "ignore": ["node_modules"],
+  "watch": ["server"],
+  "exec": "babel-node server/index.js"
+}
