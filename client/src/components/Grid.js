@@ -23,7 +23,7 @@ function GridView({ reports, updateReport }) {
                   source={report.source}
                   referenceResourceType={report.payload.referenceResourceType}
                   reportType={formatReportType(report.payload.reportType)}
-                  state={report.payload.state}
+                  state={report.state}
                   reportId={report.payload.reportId}
                   updateReport={updateReport}
                 />

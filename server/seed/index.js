@@ -6,14 +6,14 @@ import { Report } from "../models/report";
 dotenv.config();
 
 export async function seedData(exit = false) {
-  const { MONGO_URI } = process.env;
+  const { MONGO_URI, NODE_ENV = 'development' } = process.env;
 
   try {
     if (!MONGO_URI) {
       throw new Error("`MONGODB_URI` not set");
     }
 
-    await mongoose.connect(MONGO_URI, {
+    await mongoose.connect(`${MONGO_URI}_${NODE_ENV}`, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useCreateIndex: true,

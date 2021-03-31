@@ -5,6 +5,7 @@ import http from "http";
 import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
+import {middleware, exception as HttpError} from 'express-exception-handler';
 
 import reportController from "./controllers/reportController";
 
@@ -12,17 +13,17 @@ dotenv.config();
 
 let server;
 let db;
-let app = express();
+export let app = express();
 
 const configureDb = async () => {
-  const { MONGO_URI } = process.env;
+  const { MONGO_URI, NODE_ENV = 'development' } = process.env;
 
   try {
     if (!MONGO_URI) {
       throw new Error("`MONGODB_URI` not set");
     }
 
-    db = await mongoose.connect(MONGO_URI, {
+    db = await mongoose.connect(`${MONGO_URI}_${NODE_ENV}`, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
       useCreateIndex: true,
@@ -69,6 +70,18 @@ const configureServer = () => {
 
 const configureExpress = () => {
   app.use("/api/v1", reportController);
+  app.use("/health", async(_request, response) => {
+      response.send({
+        uptime: process.uptime(),
+        message: "OK",
+        timestamp: Date.now(),
+      });
+   
+  })
+  app.use((request, response, next)=>{
+    next(new HttpError('Route not found', 404,{message: 'route not found'}))
+  })
+  app.use(middleware)
 };
 
 const normalizePort = (val) => {

@@ -4,6 +4,7 @@ import { Button } from "semantic-ui-react";
 function Header({ reportView, setReportView }) {
   const TABLE_VIEW = "table";
   const GRID_VIEW = "grid";
+
   return (
     <header className="header-wrapper">
       <div className="app-header">

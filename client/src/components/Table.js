@@ -27,7 +27,6 @@ const TableView = ({ reports, updateReport }) => {
       <Table.Body>
         {reports &&
           reports.map((element, i) => {
-            console.log(element)
             return (
               <Table.Row key={i}>
                 <Table.Cell>{element.payload.reportId}</Table.Cell>
@@ -35,7 +34,7 @@ const TableView = ({ reports, updateReport }) => {
                   {formatReportType(element.payload.reportType)}
                 </Table.Cell>
                 <Table.Cell warning>
-                  <Label color={element.state === "Blocked" ? "red" : "grey"}>
+                  <Label color={element.state === "BLOCKED" ? "red" : "grey"}>
                     {element.state}
                   </Label>
                 </Table.Cell>
@@ -51,14 +50,14 @@ const TableView = ({ reports, updateReport }) => {
                     Resolve
                   </Button>
 
-                  {
+                  { element.state !== "BLOCKED" &&
                     <Button
                       className="red"
                       onClick={() =>
                         updateReport("Blocked", element.payload.reportId)
                       }
                     >
-                      Blocked
+                      Block
                     </Button>
                   }
                 </Table.Cell>

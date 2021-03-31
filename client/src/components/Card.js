@@ -6,7 +6,8 @@ function SourceCard({
   referenceResourceType,
   reportType,
   updateReport,
-  reportId
+  reportId,
+  state
 }) {
   return (
     <div>
@@ -27,13 +28,15 @@ function SourceCard({
             >
               Resolve
             </Button>
-            <Button
-              basic
-              color="red"
-              onClick={() => updateReport("Blocked", reportId)}
-            >
-              Blocked
-            </Button>
+            {state !== "BLOCKED" && (
+              <Button
+                basic
+                color="red"
+                onClick={() => updateReport("Blocked", reportId)}
+              >
+                Block
+              </Button>
+            )}
           </div>
         </Card.Content>
       </Card>

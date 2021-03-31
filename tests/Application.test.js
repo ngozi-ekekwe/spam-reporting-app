@@ -2,30 +2,44 @@ import Express from 'express';
 import { Server } from 'http';
 import request from 'supertest';
 
-import Application from "../server/Application";
+import * as Application from "../server/Application";
 
 describe('Application configuration test', () => {
   let express;
   let application;
 
-  beforeAll(() => {
+  beforeAll(async () => {
+    const listenSpy = jest.spyOn(Server.prototype, 'listen').mockImplementation();
+    application = Application;
+    await application.start();
 
+    express = application.app;//
+    listenSpy.mockRestore();
   });
 
   afterEach(() => {
-
+    jest.clearAllMocks();
+    jest.resetAllMocks();
   });
 
-  afterAll(() => {
-
+  afterAll(async () => {
+    jest.restoreAllMocks();
+    await application.shutdown();
   });
 
   describe('Spam Service Routes', () => {
-    it('should return 404 if route is not found', () => {
-      const response = await request(express).get('/unknown').expect('Content-Type', /json/);
+    it('should return 404 if route is not found', async() => {
+
+        const response = await request(express).get('/unknown').expect('Content-Type', /json/);
+
+        expect(response.status).toBe(404);
+
+      
     });
 
-    it('should return healthcheck', () => {
+    it('should return healthcheck', async () => {
+      const response = await request(express).get('/health').expect('Content-Type', /json/);
+      expect(response.status).toBe(200);
 
     })
   })

@@ -1,52 +1,40 @@
 import { Router } from "express";
+import { exception as HttpError } from "express-exception-handler";
+
 import { Report } from "../models/report";
-import { transformData } from '../utils';
+import { transformData } from "../utils";
 
 require("express-async-errors");
+
 const router = Router();
 
-router.get("/health", async(_request, response) => {
-  try {
-    response.send({
-      uptime: process.uptime(),
-      message: "OK",
-      timestamp: Date.now(),
-    });
-  } catch (error) {
-    response.status(503).send(error);
-  }
-});
-
 router.get("/reports", async (_request, response) => {
-  try {
-    const reports = await Report.find({ state: "OPEN" }).exec();
-    response.status(200).send(reports.map(transformData));
-  } catch (error) {
-    return { error, message: "Unable to fetch reports" };
-  }
+  const reports = await Report.find({ state: { $nin: ["CLOSED"] } }).exec();
+  response.status(200).send(reports.map(transformData));
 });
 
 router.put("/reports/:reportId", async (request, response) => {
   const { reportId } = request.params;
   const { ticketState } = request.body;
-  try {
-    const updated = await Report.updateMany(
-      { "payload.reportId": reportId },
-      {
-        $set: {
-          state: ticketState,
-        },
-      }
-    ).exec();
-    const reports = await Report.find({
-      "payload.reportId": reportId,
-    });
-    if (updated.ok) {
-      response.status(200).send(reports.map(transformData));
+  const updated = await Report.updateMany(
+    { "payload.reportId": reportId },
+    {
+      $set: {
+        state: ticketState,
+      },
     }
-  } catch (error) {
-    return { error, message: "Unable to update report with report id" };
+  ).exec();
+  const reports = await Report.find({
+    "payload.reportId": reportId,
+  });
+
+  if (updated.n) {
+    response.status(200).send(reports.map(transformData));
+    return;
   }
+  throw new HttpError("Unable to update report", 404, {
+    message: `report(s) with id: ${reportId} not found`,
+  });
 });
 
 export default router;

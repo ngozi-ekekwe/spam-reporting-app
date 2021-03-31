@@ -3,23 +3,28 @@ import Header from "./components/Header";
 import GridView from "./components/Grid";
 import TableView from "./components/Table";
 import { getAllReports, updateReportStatus } from "./service";
+import { Dimmer, Loader } from "semantic-ui-react";
 import PopupModal from "./components/Modal";
+import EmptyState from "./components/EmptyState";
+import { setReportViewToLocalStorage, getDefaulView } from "./utils";
 import "semantic-ui-css/semantic.min.css";
 
 function App() {
   const TABLE_VIEW = "table";
-  const [reportView, setReportView] = useState(TABLE_VIEW);
+  let defaultView = getDefaulView() || TABLE_VIEW;
+  const [reportView, setReportView] = useState(defaultView);
   const [reports, setReports] = useState([]);
   const [updatedList, setUpdatedList] = useState([]);
+  const [loading, setIsLoading] = useState(true);
 
-  function stateReducer(state, action) {
+  function stateReducer(_state, action) {
     switch (action.type) {
       case "close":
         return { open: false };
       case "open":
         return { open: true, size: action.size };
       default:
-        throw new Error("Unsupported action...");
+        throw new Error("Unsupported action");
     }
   }
 
@@ -38,6 +43,7 @@ function App() {
   useEffect(() => {
     getAllReports().then((data) => {
       setReports(data);
+      setIsLoading(false);
     });
   }, []);
 
@@ -56,9 +62,20 @@ function App() {
     });
   };
 
+  const saveViewToLocalStorage = (view) => {
+    setReportView(view);
+    setReportViewToLocalStorage(view);
+  };
+
   return (
     <div className="App">
-      <Header reportView={reportView} setReportView={setReportView}></Header>
+      <Dimmer active={loading}>
+        <Loader />
+      </Dimmer>
+      <Header
+        reportView={reportView}
+        setReportView={saveViewToLocalStorage}
+      ></Header>
       <PopupModal
         size={size}
         open={open}
@@ -66,11 +83,12 @@ function App() {
         onClose={closeModal}
       />
       <div className="report-view">
-        {reportView === TABLE_VIEW ? (
+        {!loading && reports.length > 0 && reportView === TABLE_VIEW ? (
           <TableView reports={reports} updateReport={updateReport} />
         ) : (
           <GridView reports={reports} updateReport={updateReport} />
         )}
+        {!loading && reports.length <= 0 && <EmptyState />}
       </div>
     </div>
   );
