@@ -19,7 +19,7 @@ A simple full stack reporting system for spam protection team to resolve and blo
 Copy the .env.example file and rename it inot .env.sample Edit your .env with the required values
 
 ```
-MONGO_URI=Your database URL
+MONGO_URI=mongodb://host:port/db_name
 ```
 
 ### Installation
@@ -36,7 +36,7 @@ $ npm install
 
 ### Running the Application (in development)
 
-Ensure you have mongoDB is running and MONGO_URI is set
+Ensure you have mongoDB running and MONGO_URI is set
 
 #### Start Server
 ```
@@ -68,6 +68,7 @@ Ensure you have mongoDB is running and MONGO_URI is set
 ### Future Improvements
  - Write MORE Tests
  - Improve UI
+ - Improve code structure
 
 License
 ----

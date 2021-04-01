@@ -63,10 +63,3 @@ describe("api/v1", () => {
     expect(result.body.message).toEqual('report(s) with id: not-exist not found');
   })
 });
-
-//   describe('GET api/v1/reports', () => {
-//     it('should return all open reports', () => {
-
-//     })
-//   })
-// })
