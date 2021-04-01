@@ -2,6 +2,8 @@
 
 A simple full stack reporting system for spam protection team to resolve and block spam;
 
+<img width="1673" alt="Screenshot 2021-04-01 at 00 21 24" src="https://user-images.githubusercontent.com/11598255/113218771-63a29280-9280-11eb-934b-656b557d070d.png">
+
 ### Features!
 - Team members can block or resolve spam reports.
 
