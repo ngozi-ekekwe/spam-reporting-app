@@ -1,6 +1,6 @@
 # spam-reporting-app
 
-A simple full stack reporting system for spam protection team to resolve and block spam;
+A simple full stack application for reporting and blocking spam reports
 
 <img width="1673" alt="Screenshot 2021-04-01 at 00 21 24" src="https://user-images.githubusercontent.com/11598255/113218771-63a29280-9280-11eb-934b-656b557d070d.png">
 
@@ -8,9 +8,9 @@ A simple full stack reporting system for spam protection team to resolve and blo
 - Team members can block or resolve spam reports.
 
 ### Development
-- This API has been created using Node.js environment and implementing Express as the routing framework 
+- This API has been created using Node.js environment and Express as the routing framework 
 - MongoDB as the database 
-- The client has been built with React as the frontend framework and Semantic UI as the CSS Framework.
+- The client has been built with React as the frontend framework and Semantic UI as the CSS framework.
 
 ### Prerequisites
 - Node.js
