@@ -105,17 +105,6 @@ const normalizePort = (val) => {
 };
 
 export const start = async () => {
-  // quit on ctrl-c when running docker in terminal
-  process.on("SIGINT", () => {
-    console.error(`Got SIGINT. Graceful shutdown ${new Date().toISOString()}`);
-    shutdown();
-  });
-  // quit properly on docker stop
-  process.on("SIGTERM", () => {
-    console.error(`Got SIGTERM. Graceful shutdown ${new Date().toISOString()}`);
-    shutdown();
-  });
-
   console.log(`Starting Service`);
   await configureDb();
   await configureServer();
