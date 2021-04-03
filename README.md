@@ -71,6 +71,7 @@ Ensure you have mongoDB running and MONGO_URI is set
  - Write MORE Tests
  - Improve UI
  - Improve code structure
+ - Unblock and Block reports
 
 License
 ----

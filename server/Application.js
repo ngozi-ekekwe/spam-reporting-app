@@ -5,7 +5,7 @@ import http from "http";
 import morgan from "morgan";
 import cors from "cors";
 import dotenv from "dotenv";
-import {middleware, exception as HttpError} from 'express-exception-handler';
+import { middleware, exception as HttpError } from "express-exception-handler";
 
 import reportController from "./controllers/reportController";
 
@@ -16,7 +16,7 @@ let db;
 export let app = express();
 
 const configureDb = async () => {
-  const { MONGO_URI, NODE_ENV = 'development' } = process.env;
+  const { MONGO_URI, NODE_ENV = "development" } = process.env;
 
   try {
     if (!MONGO_URI) {
@@ -70,18 +70,22 @@ const configureServer = () => {
 
 const configureExpress = () => {
   app.use("/api/v1", reportController);
-  app.use("/health", async(_request, response) => {
-      response.send({
-        uptime: process.uptime(),
-        message: "OK",
-        timestamp: Date.now(),
-      });
-   
-  })
-  app.use((request, response, next)=>{
-    next(new HttpError('Route not found', 404,{message: 'route not found'}))
-  })
-  app.use(middleware)
+  app.use("/health", async (_request, response) => {
+    response.send({
+      uptime: process.uptime(),
+      message: "OK",
+      timestamp: Date.now(),
+    });
+  });
+  app.get("/", async (_request, response) => {
+    response.status(201).send({
+      message: "Spam API service",
+    });
+  });
+  app.use((_request, _response, next) => {
+    next(new HttpError("Route not found", 404, { message: "route not found" }));
+  });
+  app.use(middleware);
 };
 
 const normalizePort = (val) => {

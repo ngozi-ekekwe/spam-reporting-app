@@ -13,7 +13,7 @@ describe('Application configuration test', () => {
     application = Application;
     await application.start();
 
-    express = application.app;//
+    express = application.app;
     listenSpy.mockRestore();
   });
 
