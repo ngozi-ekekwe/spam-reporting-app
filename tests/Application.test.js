@@ -1,4 +1,3 @@
-import Express from 'express';
 import { Server } from 'http';
 import request from 'supertest';
 
@@ -29,18 +28,21 @@ describe('Application configuration test', () => {
 
   describe('Spam Service Routes', () => {
     it('should return 404 if route is not found', async() => {
-
         const response = await request(express).get('/unknown').expect('Content-Type', /json/);
-
         expect(response.status).toBe(404);
-
-      
+        expect(response.body.message).toBe("route not found");  
     });
 
     it('should return healthcheck', async () => {
       const response = await request(express).get('/health').expect('Content-Type', /json/);
       expect(response.status).toBe(200);
+      expect(response.body.message).toBe("OK");
+    });
 
-    })
+    it('should return healthcheck', async () => {
+      const response = await request(express).get('/').expect('Content-Type', /json/);
+      expect(response.status).toBe(200);
+      expect(response.body.message).toBe("Spam API service");
+    });
   })
 })

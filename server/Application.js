@@ -78,7 +78,7 @@ const configureExpress = () => {
     });
   });
   app.get("/", async (_request, response) => {
-    response.status(201).send({
+    response.status(200).send({
       message: "Spam API service",
     });
   });

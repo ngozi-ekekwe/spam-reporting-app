@@ -1,6 +1,6 @@
 # spam-reporting-app
 
-A simple full stack application for reporting and blocking spam reports
+A simple full stack application for reporting and blocking OPEN spam reports
 
 <img width="1673" alt="Screenshot 2021-04-01 at 00 21 24" src="https://user-images.githubusercontent.com/11598255/113218771-63a29280-9280-11eb-934b-656b557d070d.png">
 
@@ -8,7 +8,7 @@ A simple full stack application for reporting and blocking spam reports
 - Team members can block or resolve spam reports.
 
 ### Development
-- This API has been created using Node.js environment and Express as the routing framework 
+- This API has been created using Node.js and express as the routing framework 
 - MongoDB as the database 
 - The client has been built with React as the frontend framework and Semantic UI as the CSS framework.
 
@@ -40,20 +40,21 @@ $ npm install
 
 Ensure you have mongoDB running and MONGO_URI is set
 
-#### Start Server
+#### START SERVER
+- Run command from main directory
 ```
   $ npm run start-dev
 ```
 
-#### Start Client
-- Change directory to client and start client
+#### START CLIENT
+- Open another terminal and change directory to client and start client
 ```
   $ cd client 
   $ npm run start
 ```
 
 
-#### run test
+#### RUN TEST
 ```
   $ npm test
 ```
@@ -63,17 +64,12 @@ Ensure you have mongoDB running and MONGO_URI is set
 | VERB | URL | ACTION |
 | ------ | ------ | ------ |
 | GET | /api/v1/reports | Lists All Reports |
-| PUT | /api/v1/reports/:reportId | Updates a Report |
+| PUT | /api/v1/reports/:reportId | Updates a Report ( block / report ) |
   GET | /health | Check health status of API |
-
 
 ### Future Improvements
  - Write MORE Tests
  - Improve UI
  - Improve code structure
- - Unblock and Block reports
+ - Unblock and Block reports which updates the `Source table`
 
-License
-----
-
-MIT

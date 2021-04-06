@@ -1,5 +1,4 @@
 import { Report } from "../../server/models/report";
-import Express from "express";
 import { Server } from "http";
 
 import request from "supertest";
@@ -42,13 +41,11 @@ describe("api/v1", () => {
   it("should return all reports that are not closed", async () => {
     const result = await request(express).get("/api/v1/reports");
     expect(result.status).toBe(200);
-
     expect(result.body).toHaveLength(25);
   });
   it ('should close reports with id specified', async()=>{
     const result = await request(express).put('/api/v1/reports/6706b3ba-bf36-4ad4-9b9d-4ebf4f4e2429').send({ticketState: 'CLOSED'})
     expect(result.status).toBe(200);
-
     expect(result.body).toHaveLength(1);
 
     const response = await request(express).get("/api/v1/reports");
