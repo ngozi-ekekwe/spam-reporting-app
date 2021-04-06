@@ -39,7 +39,7 @@ describe('Application configuration test', () => {
       expect(response.body.message).toBe("OK");
     });
 
-    it('should return healthcheck', async () => {
+    it('should return a starting message', async () => {
       const response = await request(express).get('/').expect('Content-Type', /json/);
       expect(response.status).toBe(200);
       expect(response.body.message).toBe("Spam API service");
