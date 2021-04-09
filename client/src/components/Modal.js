@@ -6,10 +6,10 @@ const PopupModal = ({ size, open, onClose,  content }) => {
   return (
     <>
       <Modal size={size} open={open} onClose={onClose}>
-        <Modal.Header>Reports with the following ID(s) have been Updated</Modal.Header>
+        <Modal.Header>Report(s) with the following ID(s) have been Updated</Modal.Header>
         <Modal.Content>
-          {content && content.map((c) => {
-            return <p>{c.id}</p>
+          {content && content.map((c, i) => {
+            return <p key={i}>{c.id}</p>
           })}
         </Modal.Content>
         <Modal.Actions>

@@ -1,18 +1,8 @@
 import React from "react";
 import { Button, Table, Label } from "semantic-ui-react";
+import { reportTypeMap, tableHeader } from "../utils";
 
 const TableView = ({ reports, updateReport }) => {
-  const tableHeader = ["Report ID", "Type", "State", "Message", "Actions"];
-
-  const formatReportType = (type) => {
-    let reportTypeDictionary = {
-      VIOLATES_POLICIES: "Violates Policies",
-      SPAM: "Spam",
-      INFRINGES_PROPERTY: "Infringes Property",
-    };
-    return reportTypeDictionary[type];
-  };
-
   return (
     <Table celled>
       <Table.Header>
@@ -31,7 +21,7 @@ const TableView = ({ reports, updateReport }) => {
               <Table.Row key={i}>
                 <Table.Cell>{element.payload.reportId}</Table.Cell>
                 <Table.Cell>
-                  {formatReportType(element.payload.reportType)}
+                  {reportTypeMap[element.payload.reportType]}
                 </Table.Cell>
                 <Table.Cell warning>
                   <Label color={element.state === "BLOCKED" ? "red" : "grey"}>
@@ -50,7 +40,7 @@ const TableView = ({ reports, updateReport }) => {
                     Resolve
                   </Button>
 
-                  { element.state !== "BLOCKED" &&
+                  {element.state !== "BLOCKED" && (
                     <Button
                       className="red"
                       onClick={() =>
@@ -59,7 +49,7 @@ const TableView = ({ reports, updateReport }) => {
                     >
                       Block
                     </Button>
-                  }
+                  )}
                 </Table.Cell>
               </Table.Row>
             );

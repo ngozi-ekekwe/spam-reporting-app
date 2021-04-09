@@ -1,16 +1,18 @@
 import React, { useState, useEffect, useReducer } from "react";
+import { Dimmer, Loader } from "semantic-ui-react";
+import "semantic-ui-css/semantic.min.css";
+
 import Header from "./components/Header";
 import GridView from "./components/Grid";
 import TableView from "./components/Table";
-import { getAllReports, updateReportStatus } from "./service";
-import { Dimmer, Loader } from "semantic-ui-react";
 import PopupModal from "./components/Modal";
 import EmptyState from "./components/EmptyState";
-import { setReportViewToLocalStorage, getDefaulView } from "./utils";
-import "semantic-ui-css/semantic.min.css";
+
+import { setReportViewToLocalStorage, getDefaulView, TABLE_VIEW } from "./utils";
+import { getAllReports, updateReportStatus } from "./service";
 
 function App() {
-  const TABLE_VIEW = "table";
+  
   let defaultView = getDefaulView() || TABLE_VIEW;
   const [reportView, setReportView] = useState(defaultView);
   const [reports, setReports] = useState([]);

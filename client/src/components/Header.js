@@ -9,7 +9,7 @@ function Header({ reportView, setReportView }) {
     <header className="header-wrapper">
       <div className="app-header">
         <a href="/" className="brand-logo">
-          Spam Reporter
+          Reporter
         </a>
         <Button.Group>
           <Button

@@ -7,40 +7,38 @@ function SourceCard({
   reportType,
   updateReport,
   reportId,
-  state
+  state,
 }) {
   return (
-    <div>
-      <Card>
-        <Card.Content>
-          <Card.Header>{reportType}</Card.Header>
-          <Card.Meta>
-            <span>{source}</span>
-            <span className="date">{referenceResourceType}</span>
-          </Card.Meta>
-        </Card.Content>
-        <Card.Content extra>
-          <div className="ui two buttons">
+    <Card>
+      <Card.Content>
+        <Card.Header>{reportType}</Card.Header>
+        <Card.Meta>
+          <span>{source}</span>
+          <span className="date">{referenceResourceType}</span>
+        </Card.Meta>
+      </Card.Content>
+      <Card.Content extra>
+        <div className="ui two buttons">
+          <Button
+            basic
+            color="green"
+            onClick={() => updateReport("closed", reportId)}
+          >
+            Resolve
+          </Button>
+          {state !== "BLOCKED" && (
             <Button
               basic
-              color="green"
-              onClick={() => updateReport("closed", reportId)}
+              color="red"
+              onClick={() => updateReport("Blocked", reportId)}
             >
-              Resolve
+              Block
             </Button>
-            {state !== "BLOCKED" && (
-              <Button
-                basic
-                color="red"
-                onClick={() => updateReport("Blocked", reportId)}
-              >
-                Block
-              </Button>
-            )}
-          </div>
-        </Card.Content>
-      </Card>
-    </div>
+          )}
+        </div>
+      </Card.Content>
+    </Card>
   );
 }
 
