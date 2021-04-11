@@ -31,9 +31,11 @@
   "scripts": {
     "test": "NODE_ENV=test jest --coverage",
     "start-dev": "nodemon",
-    "start": "babel-node server/index.js",
+    "build-client": "cd client && npm install && npm run build",
+    "start": "npm run build-client && npm install && babel-node server/index.js",
     "prestart-dev": "npm run seed",
-    "seed": "babel-node server/seed/index.js run-seed"
+    "seed": "babel-node server/seed/index.js run-seed",
+    "heroku-postbuild": "npm run seed"
   },
   "repository": {
     "type": "git",
