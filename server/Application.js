@@ -17,6 +17,7 @@ let db;
 export let app = express();
 
 const configureDb = async () => {
+  
   const { MONGO_URI, NODE_ENV = "development" } = process.env;
 
   try {
