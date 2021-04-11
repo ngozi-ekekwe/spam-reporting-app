@@ -1,6 +1,7 @@
 import express from "express";
 import path from "path";
 import mongoose from "mongoose";
+import compression from 'compression';
 import helmet from "helmet";
 import http from "http";
 import morgan from "morgan";
@@ -49,6 +50,7 @@ export const shutdown = async () => {
 };
 
 const configureServer = () => {
+  app.use(compression())
   app.use(helmet());
   app.use(cors());
   app.use(express.json({ type: "application/json" }));
