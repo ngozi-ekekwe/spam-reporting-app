@@ -24,7 +24,7 @@ const configureDb = async () => {
   try {
     if (!MONGO_URI) {
       throw new Error("`MONGO_URI` not set");
-      
+
     }
 
     db = await mongoose.connect(`${MONGO_URI}_${NODE_ENV}`, {
@@ -73,10 +73,7 @@ const configureServer = () => {
 };
 
 const serveFrontend = () => {
-  const DIST_DIR = path.join(__dirname, "../client/build");
-  const HTML_FILE = path.join(DIST_DIR, "index.html");
-
-  console.log(HTML_FILE)
+  const HTML_FILE = path.join(__dirname, 'build', 'index.html');
 
   app.use(express.static(DIST_DIR));
   app.get("/*", (_, response) => response.sendFile(HTML_FILE));
