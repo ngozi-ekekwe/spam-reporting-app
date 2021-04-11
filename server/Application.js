@@ -23,7 +23,7 @@ const configureDb = async () => {
 
   try {
     if (!MONGO_URI) {
-      throw new Error("`MONGODB_URI` not set");
+      throw new Error("`MONGO_URI` not set");
     }
 
     db = await mongoose.connect(`${MONGO_URI}_${NODE_ENV}`, {
