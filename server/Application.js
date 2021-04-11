@@ -10,6 +10,7 @@ import { middleware, exception as HttpError } from "express-exception-handler";
 
 import reportController from "./controllers/reportController";
 
+
 dotenv.config();
 
 let server;
@@ -17,7 +18,7 @@ let db;
 export let app = express();
 
 const configureDb = async () => {
-  
+
   const { MONGO_URI, NODE_ENV = "development" } = process.env;
 
   try {
