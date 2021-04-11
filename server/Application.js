@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 import mongoose from "mongoose";
 import helmet from "helmet";
 import http from "http";
@@ -68,6 +69,17 @@ const configureServer = () => {
   console.log(`Express server started on ${port}`);
 };
 
+const serveFrontend = () => {
+  const DIST_DIR = path.join(__dirname, "../client/build");
+  const HTML_FILE = path.join(DIST_DIR, "index.html");
+
+  console.log(HTML_FILE)
+
+  app.use(express.static(DIST_DIR));
+  app.get("/*", (_, response) => response.sendFile(HTML_FILE));
+};
+
+
 const configureExpress = () => {
   app.use("/api/v1", reportController);
   app.use("/health", async (_request, response) => {
@@ -77,16 +89,13 @@ const configureExpress = () => {
       timestamp: Date.now(),
     });
   });
-  app.get("/", async (_request, response) => {
-    response.status(200).send({
-      message: "Spam API service",
-    });
-  });
+  serveFrontend()
   app.use((_request, _response, next) => {
     next(new HttpError("Route not found", 404, { message: "route not found" }));
   });
   app.use(middleware);
 };
+
 
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
@@ -95,7 +104,6 @@ const normalizePort = (val) => {
     // named pipe
     return val;
   }
-
   if (port >= 0) {
     // port number
     return port;
