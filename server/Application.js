@@ -90,17 +90,14 @@ const configureExpress = () => {
 
 const normalizePort = (val) => {
   const port = parseInt(val, 10);
-
   if (Number.isNaN(port)) {
     // named pipe
     return val;
   }
-
   if (port >= 0) {
     // port number
     return port;
   }
-
   return false;
 };
 
@@ -108,6 +105,5 @@ export const start = async () => {
   console.log(`Starting Service`);
   await configureDb();
   await configureServer();
-
   configureExpress();
 };

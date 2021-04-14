@@ -1,0 +1,24 @@
+version: '3.1'
+
+services:
+    database:
+        image: mongo
+        restart: always
+
+    backend:
+        build: './'
+        command: npm run start
+        restart: always
+        environment:
+            - MONGO_URI=mongodb://database:27017/spam_reporting
+            - NODE_ENV=production
+            - SERVER_PORT=3000
+        depends_on:
+            - database
+
+    frontend:
+        build: './client'
+        ports:
+            - 80:80
+        depends_on:
+            - backend
