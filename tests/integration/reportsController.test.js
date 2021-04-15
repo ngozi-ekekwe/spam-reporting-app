@@ -44,7 +44,7 @@ describe("api/v1", () => {
     expect(result.body).toHaveLength(25);
   });
   it ('should close reports with id specified', async()=>{
-    const result = await request(express).put('/api/v1/reports/report/6706b3ba-bf36-4ad4-9b9d-4ebf4f4e2429').send({ticketState: 'CLOSED'})
+    const result = await request(express).put('/api/v1/reports/6706b3ba-bf36-4ad4-9b9d-4ebf4f4e2429').send({ticketState: 'CLOSED'})
     expect(result.status).toBe(200);
     expect(result.body).toHaveLength(1);
 
@@ -54,7 +54,7 @@ describe("api/v1", () => {
     expect(response.body).toHaveLength(24);
   });
   it ('should throw error when the specified id does not exist', async()=>{
-    const result = await request(express).put('/api/v1/reports/report/not-exist').send({ticketState: 'CLOSED'})
+    const result = await request(express).put('/api/v1/reports/not-exist').send({ticketState: 'CLOSED'})
     expect(result.status).toBe(404);
 
     expect(result.body.message).toEqual('report(s) with id: not-exist not found');

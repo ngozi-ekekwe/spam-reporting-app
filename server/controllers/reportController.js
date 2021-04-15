@@ -13,7 +13,7 @@ router.get("/reports", async (_request, response) => {
   response.status(200).send(reports.map(transformData));
 });
 
-router.put("/reports/report/:reportId", async (request, response) => {
+router.put("/reports/:reportId", async (request, response) => {
   const { reportId } = request.params;
   const { ticketState } = request.body;
   const updated = await Report.updateMany(
