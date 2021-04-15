@@ -6,7 +6,7 @@ export async function getAllReports() {
 }
 
 export async function updateReportStatus({ ticketState, reportId }) {
-  const response = await fetch(`${REACT_APP_URL}/api/v1/reports/${reportId}`, {
+  const response = await fetch(`${REACT_APP_URL}/api/v1/reports/report/${reportId}`, {
     method: "PUT",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ ticketState: ticketState.toUpperCase() }),
