@@ -39,7 +39,7 @@ function App() {
 
   const closeModal = () => {
     dispatch({ type: "close" });
-    window.location.reload(false);
+    window.location.href= "/";
   };
 
   useEffect(() => {

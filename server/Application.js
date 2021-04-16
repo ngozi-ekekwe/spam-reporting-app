@@ -26,9 +26,7 @@ const configureDb = async () => {
     db = await mongoose.connect(`${MONGO_URI}_${NODE_ENV}`, {
       useUnifiedTopology: true,
       useNewUrlParser: true,
-      useCreateIndex: true,
-      keepAlive: true,
-      useFindAndModify: false,
+    
     });
   } catch (err) {
     throw new Error(`Error connecting to db ${err.message || err}`);
