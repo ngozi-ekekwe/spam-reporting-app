@@ -38,12 +38,13 @@ describe("api/v1", () => {
     jest.restoreAllMocks();
     await application.shutdown();
   });
-  it("should return all reports that are not closed", async () => {
+  it("should return all reports that are not closed", async (done) => {
     const result = await request(express).get("/api/v1/reports");
     expect(result.status).toBe(200);
     expect(result.body).toHaveLength(25);
+    done()
   });
-  it ('should close reports with id specified', async()=>{
+  it ('should close reports with id specified', async(done)=>{
     const result = await request(express).put('/api/v1/reports/6706b3ba-bf36-4ad4-9b9d-4ebf4f4e2429').send({ticketState: 'CLOSED'})
     expect(result.status).toBe(200);
     expect(result.body).toHaveLength(1);
@@ -52,11 +53,13 @@ describe("api/v1", () => {
     expect(response.status).toBe(200);
 
     expect(response.body).toHaveLength(24);
+    done();
   });
-  it ('should throw error when the specified id does not exist', async()=>{
+  it ('should throw error when the specified id does not exist', async(done)=>{
     const result = await request(express).put('/api/v1/reports/not-exist').send({ticketState: 'CLOSED'})
     expect(result.status).toBe(404);
 
     expect(result.body.message).toEqual('report(s) with id: not-exist not found');
+    done()
   })
 });

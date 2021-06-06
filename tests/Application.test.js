@@ -27,22 +27,25 @@ describe('Application configuration test', () => {
   });
 
   describe('Spam Service Routes', () => {
-    it('should return 404 if route is not found', async() => {
+    it('should return 404 if route is not found', async(done) => {
         const response = await request(express).get('/unknown').expect('Content-Type', /json/);
         expect(response.status).toBe(404);
-        expect(response.body.message).toBe("route not found");  
+        expect(response.body.message).toBe("route not found");
+        done();
     });
 
-    it('should return healthcheck', async () => {
+    it('should return healthcheck', async (done) => {
       const response = await request(express).get('/health').expect('Content-Type', /json/);
       expect(response.status).toBe(200);
       expect(response.body.message).toBe("OK");
+      done();
     });
 
-    it('should return a starting message', async () => {
+    it('should return a starting message', async (done) => {
       const response = await request(express).get('/').expect('Content-Type', /json/);
       expect(response.status).toBe(200);
       expect(response.body.message).toBe("Spam API service");
+      done();
     });
   })
 })
